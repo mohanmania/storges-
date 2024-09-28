@@ -17,10 +17,15 @@
     <img src="" id="img">
 
     <script>
+
+        
         let form = document.getElementById("myform");
 
         form.addEventListener("submit", (e) => {
             e.preventDefault();
+            alert("your data stored in local storage");
+            confirm("you accepted the data  in session  storage");
+            prompt("enter names");
 
             let name = document.getElementById("ip1").value;
             let city = document.getElementById("ip2").value;
