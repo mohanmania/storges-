@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Object into Array</title>
+</head>
+<body>
+    <form id="myform">
+        <label>Enter your Name:</label><br>
+        <input type="text" id="ip1" placeholder="Enter your name"><br>
+        <label>Enter your City</label><br>
+        <input type="text" id="ip2" placeholder="Enter your city"><br>
+        <input type="submit" value="Submit" style="margin-top: 10px;">
+    </form>
+    <div id="cards-container"></div>
+    <img src="" id="img">
+
+    <script>
+        let form = document.getElementById("myform");
+
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            let name = document.getElementById("ip1").value;
+            let city = document.getElementById("ip2").value;
+            let img = document.getElementById("img")
+            let fileInput = document.getElementById("file")
+
+            // if(fileInput.files && fileInput.files){
+            //     const reader = new FileReader()
+            //     reader.readAsDataURL(fileInput.files[0])
+            //     reader.addEventListener("load",function(e){
+            //         image = img.setAttribute("src",e.target.result)
+            //     })
+            // }
+            let data = { name: name, city: city, img:null};
+            console.log(data)
+
+           
+            let dataArray = JSON.parse(localStorage.getItem("users")) || [];
+
+            dataArray.push(data);
+
+            localStorage.setItem("users", JSON.stringify(dataArray));
+
+            displayData(dataArray);
+        });
+
+        function displayData(dataArray) {
+            let container = document.getElementById("cards-container");
+            container.innerHTML = ''; 
+
+            dataArray.forEach((user) => {
+                let card = document.createElement("div");
+                let img = document.getElementById("img")
+                card.appendChild(img)
+                card.style.height="150px";
+                card.style.width="150px";
+                card.style.backgroundColor="lightblue"
+                card.style.marginTop="10px"
+                card.style.border="1px solid black"
+                card.style.display="";
+                card.style.alignContent="center";
+                card.innerHTML = `<p><strong>Name:</strong> ${user.name}</p>
+                                  <p><strong>City:</strong> ${user.city}</p>`;
+                container.appendChild(card);
+            });
+        }
+
+        window.onload = function () {
+            let storedData = JSON.parse(localStorage.getItem("users")) || [];
+            displayData(storedData);
+        };
+    </script>
+</body>
+</html>
